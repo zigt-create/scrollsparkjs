@@ -88,7 +88,7 @@ const scrollIntoView = (
 ) => {
 	if (!el) return
 	if (!el.classList.contains('animated') && !cascade) el.classList.add('hide')
-  if (cascade) hideCascadeChildren(el)
+	if (cascade) hideCascadeChildren(el)
 
 	const checkInview = () => {
 		if (inView(el, percentVisible, percentVisibleMobile, container) && cascade) {
@@ -153,7 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			text = parseData.text
 		}
 		if (parseData.container) {
-			container = parseData.container
+			container = document.querySelector(parseData.container)
+			if (!container) {
+				container = false
+			}
 		}
 
 		scrollIntoView(
