@@ -1,0 +1,11 @@
+{
+  "name": "scrollsparkjs",
+  "version": "1.0.0",
+  "description": "```bash npm install \"https://github.com/zigt-create/scrollsparkjs.git#main\" --save ```",
+  "main": "scrollsparkjs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
