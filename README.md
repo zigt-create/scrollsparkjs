@@ -2,10 +2,6 @@
 
 ## Installatie
 ```bash
-ddev auth ssh
-```
-
-```bash
 ddev npm install "git@github.com:zigt-create/scrollsparkjs.git#main" --save
 ```
 
@@ -51,7 +47,7 @@ In de html.html.twig laag in de head.
 }
 ```
 
-### geavanceerd gebruik:
+### Geavanceerd gebruik:
 Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 
 ```html
@@ -72,7 +68,7 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 }
 ```
 
-### cascade gebruik:
+### Gascade gebruik:
 Children van item krijgen een voor een een animatie.
 Met damping kun je een vertraging toevoegen.
 
@@ -98,8 +94,8 @@ Met damping kun je een vertraging toevoegen.
 }
 ```
 
-### text gebruik:
-Elke letter in een stuk tekst wordt in <span> gezet.
+### Text gebruik:
+Elke letter in een stuk tekst wordt in een span gezet.
 Met damping kun je een vertraging toevoegen.
 
 ```html
@@ -122,7 +118,7 @@ h3 {
 }
 ```
 
-### container gebruik:
+### Container gebruik:
 De animatie start wanneer de parent div in beeld is.
 
 ```html
