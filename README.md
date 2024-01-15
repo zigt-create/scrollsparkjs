@@ -12,20 +12,20 @@ import "scrollsparkjs"
 ```scss
 .hide {
   opacity: 0;
-	@media (prefers-reduced-motion: reduce) {
-		opacity: 1;
-	}
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+  }
 }
 ```
 
 In de html.html.twig laag in de head.
 ```html
 <noscript>
-	<style type="text/css">
-		.hide {
-			opacity: 1;
-		}
-	</style>
+  <style type="text/css">
+    .hide {
+      opacity: 1;
+    }
+  </style>
 </noscript>
 ```
 
@@ -38,18 +38,18 @@ In de html.html.twig laag in de head.
 
 ```scss
 @keyframes fade-in {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 
 .item {
-	&.animation-fade-in {
-		animation: fade-in .5s ease-in-out forwards;
-		@media (prefers-reduced-motion: reduce) {
-			animation: none;
-		}
-	}
+  &.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 ```
 
@@ -62,18 +62,18 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 
 ```scss
 @keyframes fade-in {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 
 .item {
-	&.animation-fade-in {
-		animation: fade-in .5s ease-in-out forwards;
-		@media (prefers-reduced-motion: reduce) {
-			animation: none;
-		}
-	}
+  &.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 ```
 
@@ -83,26 +83,26 @@ Met damping kun je een vertraging toevoegen.
 
 ```html
 <div class="item" data-inview='{"direction": "fade-in", "cascade": true, "damping": 0.25}'>
-	<div class="item-child hide"></div>
-	<div class="item-child hide"></div>
-	<div class="item-child hide"></div>
+  <div class="item-child hide"></div>
+  <div class="item-child hide"></div>
+  <div class="item-child hide"></div>
 </div>
 ```
 
 ```scss
 @keyframes fade-in {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 
 .item {
-	.item-child.animation-fade-in {
-		animation: fade-in .5s ease-in-out forwards;
-		@media (prefers-reduced-motion: reduce) {
-			animation: none;
-		}
-	}
+  .item-child.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 ```
 
@@ -116,20 +116,20 @@ Met damping kun je een vertraging toevoegen.
 
 ```scss
 @keyframes fade-in {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 h3 {
-	span {
-		position: relative;
-		&.animation-fade-in {
-			animation: fade-in .5s ease-in-out forwards;
-			@media (prefers-reduced-motion: reduce) {
-				animation: none;
-			}
-		}
-	}
+  span {
+    position: relative;
+    &.animation-fade-in {
+      animation: fade-in .5s ease-in-out forwards;
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
 }
 ```
 
@@ -138,23 +138,23 @@ De animatie start wanneer de parent div in beeld is.
 
 ```html
 <div class="item-parent">
-	<div class="item hide" data-inview='{"direction": "fade-in", "container": ".item-parent"}'></div>
+  <div class="item hide" data-inview='{"direction": "fade-in", "container": ".item-parent"}'></div>
 </div>
 ```
 
 ```scss
 @keyframes fade-in {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 
 .item {
-	&.animation-fade-in {
-		animation: fade-in .5s ease-in-out forwards;
-		@media (prefers-reduced-motion: reduce) {
-			animation: none;
-		}
-	}
+  &.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 ```
