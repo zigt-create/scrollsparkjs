@@ -9,9 +9,12 @@ ddev npm install "git@github.com:zigt-create/scrollsparkjs.git#main" --save
 import "scrollsparkjs"
 ```
 
-```css
+```scss
 .hide {
   opacity: 0;
+	@media (prefers-reduced-motion: reduce) {
+		opacity: 1;
+	}
 }
 ```
 
@@ -43,6 +46,9 @@ In de html.html.twig laag in de head.
 .item {
 	&.animation-fade-in {
 		animation: fade-in .5s ease-in-out forwards;
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+		}
 	}
 }
 ```
@@ -64,6 +70,9 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 .item {
 	&.animation-fade-in {
 		animation: fade-in .5s ease-in-out forwards;
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+		}
 	}
 }
 ```
@@ -90,6 +99,9 @@ Met damping kun je een vertraging toevoegen.
 .item {
 	.item-child.animation-fade-in {
 		animation: fade-in .5s ease-in-out forwards;
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+		}
 	}
 }
 ```
@@ -113,6 +125,9 @@ h3 {
 		position: relative;
 		&.animation-fade-in {
 			animation: fade-in .5s ease-in-out forwards;
+			@media (prefers-reduced-motion: reduce) {
+				animation: none;
+			}
 		}
 	}
 }
@@ -137,6 +152,9 @@ De animatie start wanneer de parent div in beeld is.
 .item {
 	&.animation-fade-in {
 		animation: fade-in .5s ease-in-out forwards;
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+		}
 	}
 }
 ```
