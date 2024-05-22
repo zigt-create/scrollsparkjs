@@ -77,7 +77,7 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 }
 ```
 
-### Gascade gebruik:
+### Cascade gebruik:
 Children van item krijgen een voor een een animatie.
 Met damping kun je een vertraging toevoegen.
 
