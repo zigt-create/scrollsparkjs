@@ -113,7 +113,6 @@ De animatie wordt herhaald telkens wanneer het element in beeld komt.
 ```html
 <div class="item hide" data-inview='{"direction": "fade-in", "showOnce": false}'>
 ```
-Het element komt in beeld wanneer die 200px over 0% van de threshold is.
 
 ```scss
 @keyframes fade-in {
