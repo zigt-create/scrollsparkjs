@@ -42,7 +42,6 @@ In de html.html.twig laag in de head.
   100% {opacity: 1;}
 }
 
-
 .item {
   &.animation-fade-in {
     animation: fade-in .5s ease-in-out forwards;
@@ -54,10 +53,14 @@ In de html.html.twig laag in de head.
 ```
 
 ### Geavanceerd gebruik:
-Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
+Threshold hoeveel een element in beeld moet zijn voordat de animatie start.
+
+0 = 0%
+0.5 = 50%
+1 = 100%
 
 ```html
-<div class="item hide" data-inview='{"direction": "fade-in", "percentVisible": 0, "percentVisibleMobile": 20}'>
+<div class="item hide" data-inview='{"direction": "fade-in", "threshold": 0, "thresholdMobile": 0.2}'>
 ```
 
 ```scss
@@ -66,6 +69,59 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
   100% {opacity: 1;}
 }
 
+.item {
+  &.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+```
+
+### Pixel offset:
+rootMargin geeft een offset mee aan de threshold.
+
+default is:
+```js
+rootMargin = '0px 0px 0px 0px'
+```
+top left/right bottom
+
+```html
+<div class="item hide" data-inview='{"direction": "fade-in", "threshold": 0, "rootMargin": "-200px"}'>
+```
+Het element komt in beeld wanneer die 200px over 0% van de threshold is.
+
+```scss
+@keyframes fade-in {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.item {
+  &.animation-fade-in {
+    animation: fade-in .5s ease-in-out forwards;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+```
+
+### Herhaal animatie:
+De animatie wordt herhaald telkens wanneer het element in beeld komt.
+
+```html
+<div class="item hide" data-inview='{"direction": "fade-in", "showOnce": false}'>
+```
+Het element komt in beeld wanneer die 200px over 0% van de threshold is.
+
+```scss
+@keyframes fade-in {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
 
 .item {
   &.animation-fade-in {
@@ -78,7 +134,7 @@ Percentage hoeveel de div in beeld moet zijn voordat de animatie start.
 ```
 
 ### Cascade gebruik:
-Children van item krijgen een voor een een animatie.
+Children van het element krijgen een voor een een animatie.
 Met damping kun je een vertraging toevoegen.
 
 ```html
@@ -147,7 +203,6 @@ De animatie start wanneer de parent div in beeld is.
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
-
 
 .item {
   &.animation-fade-in {

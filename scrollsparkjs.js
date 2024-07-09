@@ -1,174 +1,116 @@
-const inView = (el, percentVisible, percentVisibleMobile, container) => {
-	let rect = false
-	if (container) {
-		rect = container.getBoundingClientRect()
-	} else {
-		rect = el.getBoundingClientRect()
-	}
+const inView = (target, direction, cascade, damping, text) => {
+  const normalAnim = (target, direction) => {
+    target.classList.remove('hide')
+    target.classList.add(`animation-${direction}`)
+  }
 
-	let setPercentVisible = 50
+  const cascadeAnim = (target, direction, damping) => {
+    const children = target.children
+    for (let i = 0; i < children.length; i++) {
+      setTimeout(() => {
+        children[i].classList.remove('hide')
+        children[i].classList.add(`animation-${direction}`)
+      }, i * damping * 1000)
+    }
+  }
 
-	if (window.innerWidth > 768) {
-		setPercentVisible = percentVisible
-	} else {
-		setPercentVisible = percentVisibleMobile
-	}
+  const textAnim = (target, direction, damping) => {
+    target.classList.remove('hide')
+    let string = target.textContent
+    target.textContent = ''
+    string.split('')
+    for (let i = 0; i < string.length; i++) {
+      target.innerHTML += '<span>' + string[i] + '</span>'
+    }
+    const children = target.children
+    for (let i = 0; i < children.length; i++) {
+      const element = children[i]
+      if (!element.classList.contains(`animation-${direction}`)) {
+        element.classList.add('hide')
+        setTimeout(() => {
+          element.classList.remove('hide')
+          element.classList.add(`animation-${direction}`)
+        }, i * damping * 1000)
+      }
+    }
+  }
 
-	const windowHeight =
-		window.innerHeight || document.documentElement.clientHeight
-
-	return !(
-		Math.floor(100 - ((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100) <
-			setPercentVisible ||
-		Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) <
-			setPercentVisible
-	)
-}
-
-const animationWithCascade = (parent, direction, damping) => {
-	const children = parent.children
-	for (let index = 0; index < children.length; index++) {
-		const element = children[index]
-		if (!element.classList.contains(`animation-${direction}`)) {
-			element.classList.add('hide')
-			setTimeout(() => {
-				element.classList.remove('hide')
-				element.classList.add(`animation-${direction}`)
-			}, damping * index * 1000)
-		}
-	}
-}
-
-const hideCascadeChildren = (parent) => {
-	const children = parent.children
-	for (let index = 0; index < children.length; index++) {
-		const element = children[index]
-		element.classList.add('hide')
-	}
-}
-
-const animationElment = (el, direction) => {
-	el.classList.remove('hide')
-	el.classList.add(`animation-${direction}`)
-}
-
-const animationText = (el, direction, damping) => {
-	el.classList.remove('hide')
-	let string = el.textContent
-	el.textContent = ''
-	string.split('')
-	let i = 0,
-		length = string.length
-	for (i; i < length; i++) {
-		el.innerHTML += '<span>' + string[i] + '</span>'
-	}
-
-	const children = el.children
-	for (let index = 0; index < children.length; index++) {
-		const element = children[index]
-		if (!element.classList.contains(`animation-${direction}`)) {
-			element.classList.add('hide')
-			setTimeout(() => {
-				element.classList.remove('hide')
-				element.classList.add(`animation-${direction}`)
-			}, damping * 1000 * index)
-		}
-	}
-}
-
-const scrollIntoView = (
-	el,
-	direction,
-	cascade,
-	damping,
-	percentVisible,
-	percentVisibleMobile,
-	text,
-	container
-) => {
-	if (!el) return
-	if (!el.classList.contains('animated') && !cascade) el.classList.add('hide')
-	if (cascade) hideCascadeChildren(el)
-
-	const checkInview = () => {
-		if (inView(el, percentVisible, percentVisibleMobile, container) && cascade) {
-			animationWithCascade(el, direction, damping)
-		} else if (
-			inView(el, percentVisible, percentVisibleMobile, container) &&
-			text
-		) {
-			animationText(el, direction, damping)
-		} else if (inView(el, percentVisible, percentVisibleMobile, container)) {
-			animationElment(el, direction)
-		}
-	}
-
-	const scrolling = () => {
-		if (inView(el, percentVisible, percentVisibleMobile, container)) {
-			document.removeEventListener('scroll', scrolling, {
-				passive: true,
-			})
-			checkInview()
-		}
-	}
-
-	if (!inView(el, percentVisible, percentVisibleMobile, container))
-		document.addEventListener('scroll', scrolling, { passive: true })
-	checkInview()
+  if (!cascade && !text) normalAnim(target, direction)
+  if (cascade && !text) cascadeAnim(target, direction, damping)
+  if (text) textAnim(target, direction, damping)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	const targets = document.querySelectorAll('[data-inview]')
-	targets.forEach((target) => {
-		if (!target) return false
-		const data = target.dataset.inview
-		if (!data) return false
-		const parseData = JSON.parse(data)
-		if (!parseData) return false
+  const targets = document.querySelectorAll('[data-inview]')
+  if (targets.length === 0) return false
 
-		let direction = 'fade-in'
-		let cascade = false
-		let damping = 1
-		let percentVisible = 50
-		let percentVisibleMobile = 20
-		let text = false
-		let container = false
+  targets.forEach((target) => {
+    if (!target) return false
+    const data = target.dataset.inview
+    if (!data) return false
+    const parseData = JSON.parse(data)
+    if (!parseData) return false
 
-		if (parseData.direction) {
-			direction = parseData.direction
-		}
-		if (parseData.cascade) {
-			cascade = parseData.cascade
-		}
-		if (parseData.damping) {
-			damping = parseData.damping
-		}
-		if (parseData.percentVisible || parseData.percentVisible === 0) {
-			percentVisible = parseData.percentVisible
-		}
-		if (parseData.percentVisibleMobile || parseData.percentVisibleMobile === 0) {
-			percentVisibleMobile = parseData.percentVisibleMobile
-		}
-		if (parseData.text) {
-			text = parseData.text
-		}
-		if (parseData.container) {
-			container = document.querySelector(parseData.container)
-			if (!container) {
-				container = false
-			}
-		}
+    let direction = 'fade-in'
+    let cascade = false
+    let damping = 1
+    let threshold = 0
+    let thresholdMobile = 0
+    let text = false
+    let container = false
+    let showOnce = true
+    let rootMargin = '0px 0px 0px 0px'
 
-		scrollIntoView(
-			target,
-			direction,
-			cascade,
-			damping,
-			percentVisible,
-			percentVisibleMobile,
-			text,
-			container
-		)
-		target.removeAttribute('data-inview')
-	})
+    if (typeof parseData.direction !== 'undefined') direction = parseData.direction
+    if (typeof parseData.cascade !== 'undefined') cascade = parseData.cascade
+    if (typeof parseData.damping !== 'undefined') damping = parseData.damping
+    if (typeof parseData.threshold !== 'undefined') threshold = parseData.threshold
+    if (typeof parseData.thresholdMobile !== 'undefined') thresholdMobile = parseData.thresholdMobile
+    if (typeof parseData.text !== 'undefined') text = parseData.text
+    if (typeof parseData.container !== 'undefined') container = document.querySelector(parseData.container)
+    if (typeof parseData.showOnce !== 'undefined') showOnce = parseData.showOnce
+    if (typeof parseData.rootMargin !== 'undefined') rootMargin = parseData.rootMargin
+
+    let currentThreshold = threshold
+    let currentTarget = target
+
+    if (window.innerWidth > 768) {
+      currentThreshold = threshold
+    } else {
+      currentThreshold = thresholdMobile
+    }
+
+    if (container) currentTarget = container
+
+    const handler = (entries) => {
+      entries.forEach((entry) => {
+        if (!cascade) target.classList.add('hide')
+        if (!showOnce) target.classList.remove(`animation-${direction}`)
+
+        if (cascade) {
+          const children = target.children
+          for (let i = 0; i < children.length; i++) {
+            children[i].classList.add('hide')
+            if (!showOnce)
+              children[i].classList.remove(`animation-${direction}`)
+          }
+        }
+
+        if (entry.isIntersecting) {
+          inView(target, direction, cascade, damping, text)
+          if (showOnce) observer.disconnect()
+        }
+      })
+    }
+
+    let observeOptions = {
+      rootMargin: rootMargin,
+      threshold: currentThreshold,
+    }
+
+    const observer = new IntersectionObserver(handler, observeOptions)
+    observer.observe(currentTarget)
+
+    target.removeAttribute('data-inview')
+  })
 })
