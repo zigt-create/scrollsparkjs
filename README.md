@@ -55,12 +55,10 @@ In de html.html.twig laag in de head.
 ### Geavanceerd gebruik:
 Threshold hoeveel een element in beeld moet zijn voordat de animatie start.
 
-0 = 0%
-0.5 = 50%
-1 = 100%
+0 = 0%, 0.5 = 50%, 1 = 100%
 
 ```html
-<div class="item hide" data-inview='{"direction": "fade-in", "threshold": 0, "thresholdMobile": 0.2}'>
+<div class="item hide" data-inview='{"direction": "fade-in", "threshold": 0.5, "thresholdMobile": 0.2}'>
 ```
 
 ```scss
@@ -89,7 +87,7 @@ rootMargin = '0px 0px 0px 0px'
 top left/right bottom
 
 ```html
-<div class="item hide" data-inview='{"direction": "fade-in", "threshold": 0, "rootMargin": "-200px"}'>
+<div class="item hide" data-inview='{"direction": "fade-in", "rootMargin": "-200px"}'>
 ```
 Het element komt in beeld wanneer die 200px over 0% van de threshold is.
 
